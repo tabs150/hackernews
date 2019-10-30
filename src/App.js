@@ -9,10 +9,6 @@ const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
-
-console.log(url);
-
 const list = [
   {
     title: 'React',
@@ -69,9 +65,10 @@ class App extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  onSearchSubmit() {
+  onSearchSubmit(event) {
     const { searchTerm } = this.state;
     this.fetchSearchTopStories(searchTerm);
+    event.preventDefault();
   }
 
   onDismiss(id) {
@@ -94,13 +91,7 @@ class App extends Component {
             Search
           </Search>
         </div>
-        {result && (
-          <Table
-            list={result.hits}
-            pattern={searchTerm}
-            onDismiss={this.onDismiss}
-          />
-        )}
+        {result && <Table list={result.hits} onDismiss={this.onDismiss} />}
       </div>
     );
   }
