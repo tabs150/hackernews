@@ -10,17 +10,22 @@ function isSearched(searchTerm) {
 
 const Table = ({ list, pattern, onDismiss }) => {
   return (
-    <div>
+    <div className='table'>
       {list.filter(isSearched(pattern)).map(item => (
-        <div key={item.objectID}>
-          <span>
+        <div key={item.objectID} className='table-row'>
+          <span className='largeCol'>
             Link: <a href={item.url}>{item.title}</a>
           </span>
-          <span> Author: {item.author}</span>
-          <span> Comments: {item.num_comments}</span>
-          <span> Points: {item.points}</span>
-          <span>
-            <Button onClick={() => onDismiss(item.objectID)}>Dismiss</Button>
+          <span className='mediumCol'> Author: {item.author}</span>
+          <span className='smallCol'> Comments: {item.num_comments}</span>
+          <span className='smallCol'> Points: {item.points}</span>
+          <span className='smallCol'>
+            <Button
+              onClick={() => onDismiss(item.objectID)}
+              className='button-inline'
+            >
+              Dismiss
+            </Button>
           </span>
         </div>
       ))}
