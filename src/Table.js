@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button';
 
 function isSearched(searchTerm) {
   return function(item) {
@@ -21,9 +22,7 @@ class Table extends Component {
             <span> Comments: {item.num_comments}</span>
             <span> Points: {item.points}</span>
             <span>
-              <button onClick={() => onDismiss(item.objectID)} type='button'>
-                Dismiss
-              </button>
+              <Button onClick={() => onDismiss(item.objectID)}>Dismiss</Button>
             </span>
           </div>
         ))}
