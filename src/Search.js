@@ -4,6 +4,7 @@ const Search = ({ value, onChange, children }) => {
   return (
     <form>
       {children} <input value={value} onChange={onChange} type='text' />
+      <button type='submit'>{children}</button>
     </form>
   );
 };
