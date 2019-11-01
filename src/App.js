@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
-import Search from './Search';
-import Table from './Table';
-import Button from './Button';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_HPP = '100';
@@ -131,4 +128,48 @@ class App extends Component {
   }
 }
 
+const Search = ({ value, onChange, onSubmit, children }) => {
+  return (
+    <form onSubmit={onSubmit}>
+      <input value={value} onChange={onChange} type='text' />
+      <button type='submit'>{children}</button>
+    </form>
+  );
+};
+
+const Table = ({ list, onDismiss }) => {
+  return (
+    <div className='table'>
+      {list.map(item => (
+        <div key={item.objectID} className='table-row'>
+          <span className='largeCol'>
+            Link: <a href={item.url}>{item.title}</a>
+          </span>
+          <span className='mediumCol'> Author: {item.author}</span>
+          <span className='smallCol'> Comments: {item.num_comments}</span>
+          <span className='smallCol'> Points: {item.points}</span>
+          <span className='smallCol'>
+            <Button
+              onClick={() => onDismiss(item.objectID)}
+              className='button-inline'
+            >
+              Dismiss
+            </Button>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Button = ({ onClick, className = '', children }) => {
+  return (
+    <button onClick={onClick} className={className} type='button'>
+      {children}
+    </button>
+  );
+};
+
 export default App;
+
+export { Button, Search, Table };
