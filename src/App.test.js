@@ -55,7 +55,9 @@ describe('Table', () => {
     list: [
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y' },
       { title: '2', author: '2', num_comments: 1, points: 2, objectID: 'z' }
-    ]
+    ],
+    sortKey: 'TITLE',
+    isSortReverse: false
   };
 
   it('renders without crashing', () => {
@@ -70,11 +72,8 @@ describe('Table', () => {
   });
 
   it('shows two items in list', () => {
-    const element = shallow(
-      <Table { ...props } />
-    );
+    const element = shallow(<Table {...props} />);
 
     expect(element.find('.table-row').length).toBe(2);
   });
-  
 });
