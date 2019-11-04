@@ -168,7 +168,7 @@ class Search extends Component {
       </form>
     );
   }
-}
+};
 
 class Table extends Component {
   constructor(props) {
@@ -177,12 +177,12 @@ class Table extends Component {
     this.state = {
       sortKey: 'NONE',
       isSortReverse: false
-    };
+    }
 
     this.onSort = this.onSort.bind(this);
   }
 
-  onsSort(sortKey) {
+  onSort(sortKey) {
     const isSortReverse =
       this.state.sortKey === sortKey && !this.state.isSortReverse;
     this.setState({ sortKey, isSortReverse });
