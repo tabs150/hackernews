@@ -22,6 +22,18 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse()
 };
 
+const updateSearchTopStoriesState = (hits, page) => prevState => {
+  const { searchKey, results } = prevState;
+
+  const oldHits = results && results[searchKey] ? results[searchKey].hits : [];
+
+  const updatedHits = [...oldHits, ...hits];
+  return {
+    results: { ...results, [searchKey]: { hits: updatedHits, page } },
+    isLoading: false
+  };
+};
+
 class App extends Component {
   _isMounted = false;
 
@@ -49,16 +61,8 @@ class App extends Component {
 
   setSearchTopStories(result) {
     const { hits, page } = result;
-    const { searchKey, results } = this.state;
 
-    const oldHits =
-      results && results[searchKey] ? results[searchKey].hits : [];
-    const updatedHits = [...oldHits, ...hits];
-
-    this.setState({
-      results: { ...results, [searchKey]: { hits: updatedHits, page } },
-      isLoading: false
-    });
+    this.setState(updateSearchTopStoriesState(hits, page));
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
@@ -168,7 +172,7 @@ class Search extends Component {
       </form>
     );
   }
-};
+}
 
 class Table extends Component {
   constructor(props) {
@@ -177,7 +181,7 @@ class Table extends Component {
     this.state = {
       sortKey: 'NONE',
       isSortReverse: false
-    }
+    };
 
     this.onSort = this.onSort.bind(this);
   }
@@ -191,10 +195,7 @@ class Table extends Component {
   render() {
     const { list, onDismiss } = this.props;
 
-    const {
-      sortKey,
-      isSortReverse
-    } = this.state;
+    const { sortKey, isSortReverse } = this.state;
 
     const sortedList = SORTS[sortKey](list);
     const reverseSortedList = isSortReverse ? sortedList.reverse() : sortedList;
@@ -202,22 +203,38 @@ class Table extends Component {
       <div className='table'>
         <div className='table-header'>
           <span style={{ width: '40%' }}>
-            <Sort sortKey={'TITLE'} onSort={this.onSort} activeSortKey={sortKey}>
+            <Sort
+              sortKey={'TITLE'}
+              onSort={this.onSort}
+              activeSortKey={sortKey}
+            >
               Title
             </Sort>
           </span>
           <span style={{ width: '30%' }}>
-            <Sort sortKey={'AUTHOR'} onSort={this.onSort} activeSortKey={sortKey}>
+            <Sort
+              sortKey={'AUTHOR'}
+              onSort={this.onSort}
+              activeSortKey={sortKey}
+            >
               Author
             </Sort>
           </span>
           <span style={{ width: '10%' }}>
-            <Sort sortKey={'COMMENTS'} onSort={this.onSort} activeSortKey={sortKey}>
+            <Sort
+              sortKey={'COMMENTS'}
+              onSort={this.onSort}
+              activeSortKey={sortKey}
+            >
               Comments
             </Sort>
           </span>
           <span style={{ width: '10%' }}>
-            <Sort sortKey={'POINTS'} onSort={this.onSort} activeSortKey={sortKey}>
+            <Sort
+              sortKey={'POINTS'}
+              onSort={this.onSort}
+              activeSortKey={sortKey}
+            >
               Points
             </Sort>
           </span>
